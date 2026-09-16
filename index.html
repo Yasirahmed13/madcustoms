@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#0c0c0d;color:#F4F3F3;font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#FF4A52;text-decoration:none}
+a:hover{color:#FF8A90}
+input,select,textarea,button{font-family:Archivo,system-ui,sans-serif}
+input::placeholder{color:rgba(244,243,243,.32)}
+img{max-width:100%}
+/* ---- tablet ---- */
+@media (max-width:900px){
+  .mad-nav{display:none!important}
+  .mad-hero-badge{display:none!important}
+  .mad-hdr-actions{margin-left:auto}
+  .mad-reviews{grid-template-columns:minmax(0,1fr)!important}
+  .mad-book-grid{grid-template-columns:minmax(0,1fr)!important}
+  .mad-sticky{position:static!important}
+  .mad-sec-head p{margin-left:0!important}
+  .mad-svc-grid h3{font-size:17px!important}
+  .mad-era-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+/* ---- phone ---- */
+@media (max-width:600px){
+  .mad-wrap{padding-left:16px!important;padding-right:16px!important}
+  .mad-pad{padding-top:56px!important;padding-bottom:64px!important}
+  .mad-pad-top{padding-top:56px!important}
+  .mad-pad-bottom{padding-bottom:60px!important}
+  .mad-about-top{padding-top:60px!important;gap:36px!important}
+  .mad-faq-grid{gap:32px!important}
+  .mad-footer-grid{gap:30px!important;padding-top:48px!important}
+
+  .mad-hdr{padding-top:10px!important;padding-bottom:10px!important;gap:12px!important}
+  .mad-logo{height:30px!important}
+  .mad-hdr-phone{display:none!important}
+  .mad-hdr-cta{padding:10px 14px!important;font-size:12.5px!important}
+
+
+  .mad-hero-inner{padding-top:72px!important;padding-bottom:40px!important}
+  .mad-hero-loc{font-size:10px!important;letter-spacing:.08em!important;line-height:1.5}
+  .mad-trust{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 16px!important;margin-top:36px!important}
+  .mad-trust div{min-width:0!important}
+
+  .mad-btns{flex-direction:column;align-items:stretch}
+  .mad-btns a,.mad-btns button{justify-content:center;text-align:center;box-sizing:border-box;width:100%}
+
+  .mad-chips{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mad-chips button{min-width:0;padding:12px!important;font-size:13px!important;align-items:flex-start!important}
+  .mad-days{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+
+  .mad-svc-grid{grid-template-columns:minmax(0,1fr)!important}
+  .mad-era-grid{grid-template-columns:minmax(0,1fr)!important}
+  .mad-marquee{padding-bottom:56px!important}
+
+  .mad-carly-quote{border-left:none!important;padding-left:0!important;border-top:2px solid rgba(224,27,36,.5);padding-top:22px}
+  .mad-lineage{flex-direction:column;align-items:stretch!important;gap:6px!important}
+  .mad-lineage-item{flex-direction:column;align-items:stretch!important;gap:6px!important}
+  .mad-lineage-name{white-space:normal!important;text-align:center}
+  .mad-lineage-arrow{display:block;text-align:center;transform:rotate(90deg);line-height:1}
+  .mad-lineage-arrow:empty{display:none}
+
+  .mad-ig-head{gap:10px!important}
+  .mad-ig-head a:not(.mad-ig-btn){margin-left:0!important}
+  .mad-ig-btn{margin-left:0!important;width:100%;text-align:center;box-sizing:border-box}
+  .mad-ig-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+
+  .mad-faq-q{font-size:15.5px!important;gap:12px!important;padding:18px 0!important}
+  .mad-faq-a{padding-left:0!important;font-size:14.5px!important}
+
+  .mad-mbar a{font-size:13px!important;padding:15px 6px!important}
+}
+@keyframes madmarq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes madpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+@keyframes madup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+
+<div style="background:#0c0c0d;overflow-x:hidden">
+
+<header style="position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(12,12,13,.82);border-bottom:1px solid rgba(255,255,255,.09)">
+  <div class="mad-hdr" style="max-width:1280px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:28px">
+    <a href="#top" style="display:flex;align-items:center;gap:11px;color:#F4F3F3;flex:none">
+      <img class="mad-logo" src="assets/mad-wordmark.png" alt="MAD Custom" style="height:38px;width:auto;display:block">
+    </a>
+    <nav class="mad-nav" style="display:flex;gap:26px;margin-left:auto;font-size:13.5px;font-weight:500;letter-spacing:.02em">
+      <a href="#services" style="color:rgba(244,243,243,.72)" style-hover="color:#F4F3F3">Services</a>
+      <a href="#work" style="color:rgba(244,243,243,.72)" style-hover="color:#F4F3F3">Work</a>
+      <a href="#about" style="color:rgba(244,243,243,.72)" style-hover="color:#F4F3F3">About</a>
+      <a href="#faq" style="color:rgba(244,243,243,.72)" style-hover="color:#F4F3F3">FAQ</a>
+    </nav>
+    <div class="mad-hdr-actions" style="display:flex;align-items:center;gap:12px;flex:none">
+      <a class="mad-hdr-phone" href="{{ telHref }}" style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:rgba(244,243,243,.8);border:1px solid rgba(255,255,255,.14);padding:9px 13px;white-space:nowrap;flex:none" style-hover="border-color:#E01B24;color:#F4F3F3">{{ phone }}</a>
+      <a class="mad-hdr-cta" href="#book" style="background:#E01B24;color:#0c0c0d;font-weight:700;font-size:13.5px;letter-spacing:.03em;padding:11px 18px;white-space:nowrap;flex:none" style-hover="background:#FF4A52">Book in 60 seconds</a>
+    </div>
+  </div>
+</header>
+
+<section id="top" style="position:relative;min-height:88vh;display:flex;align-items:flex-end;border-bottom:1px solid rgba(255,255,255,.09)">
+  <div style="position:absolute;inset:0;overflow:hidden;background-color:#0c0c0d">
+    <div style="position:absolute;inset:0;background-image:url(https://madcustomcars.com/wp-content/uploads/2026/03/DSC4123-scaled.jpeg);background-size:cover;background-position:center 62%;filter:brightness(.55) saturate(.8)"></div>
+    <video data-hero-reel playsinline preload="auto" loop src="assets/merge_all_three_videos_remove.mp4" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.4s ease;pointer-events:none"></video>
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 40%,rgba(12,12,13,0) 30%,rgba(12,12,13,.55) 100%)"></div>
+  </div>
+  <div class="mad-hero-badge" style="position:absolute;bottom:26px;right:22px;z-index:3;display:flex;align-items:center;gap:10px">
+    <span style="width:7px;height:7px;border-radius:50%;background:#E01B24"></span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.16em;color:rgba(244,243,243,.55)">FROM THE SHOP FLOOR</span>
+  </div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,12,13,.94) 0%,rgba(12,12,13,.66) 42%,rgba(12,12,13,.14) 100%)"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(0deg,#0c0c0d 1%,rgba(12,12,13,.35) 26%,rgba(12,12,13,0) 55%)"></div>
+  <div class="mad-wrap mad-hero-inner" style="position:relative;max-width:1280px;margin:0 auto;padding:120px 22px 56px;width:100%;box-sizing:border-box">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:26px;animation:madup .6s ease both">
+      <span style="width:7px;height:7px;border-radius:50%;background:#3FCB6E;animation:madpulse 1.8s ease-in-out infinite"></span>
+      <span class="mad-hero-loc" style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.14em;color:rgba(244,243,243,.68)">ORLANDO, FL &nbsp;·&nbsp; BARCELONETA, PR &nbsp;·&nbsp; BOOKING NOW</span>
+    </div>
+    <h1 style="font-family:Anton,sans-serif;font-size:clamp(46px,8.2vw,124px);line-height:.88;letter-spacing:-.02em;margin:0;max-width:16ch;text-transform:uppercase;animation:madup .7s ease both">Built beyond<br><span style="color:#E01B24">the ordinary</span></h1>
+    <p style="max-width:52ch;margin:26px 0 0;font-size:clamp(15px,1.5vw,19px);line-height:1.55;color:rgba(244,243,243,.74);text-wrap:pretty">Wheel fitment, suspension, wraps, PPF and one-of-one builds — engineered by MAD Custom. Tell us what you drive and pick a slot. No phone tag, no forms that go nowhere.</p>
+    <div class="mad-btns" style="display:flex;flex-wrap:wrap;gap:12px;margin:34px 0 0">
+      <a href="#book" style="background:#E01B24;color:#0c0c0d;font-weight:700;font-size:15px;letter-spacing:.02em;padding:17px 28px;display:flex;align-items:center;gap:10px" style-hover="background:#FF4A52">Start my build sheet <span style="font-family:'JetBrains Mono',monospace">→</span></a>
+      <a href="{{ waHref }}" style="border:1px solid rgba(255,255,255,.2);color:#F4F3F3;font-weight:600;font-size:15px;padding:17px 26px" style-hover="border-color:#E01B24;background:rgba(224,27,36,.1)">WhatsApp the shop</a>
+    </div>
+    <div class="mad-trust" style="display:flex;flex-wrap:wrap;gap:34px;margin-top:52px;padding-top:26px;border-top:1px solid rgba(255,255,255,.1)">
+      <sc-for list="{{ trust }}" as="t" hint-placeholder-count="4">
+        <div style="min-width:130px">
+          <div style="font-family:Anton,sans-serif;font-size:30px;color:#F4F3F3;line-height:1">{{ t.k }}</div>
+          <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,243,243,.5);margin-top:6px">{{ t.v }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="book" class="mad-wrap mad-pad" style="max-width:1280px;margin:0 auto;padding:78px 22px 90px">
+  <div class="mad-sec-head" data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px;margin-bottom:34px">
+    <div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;color:#E01B24">01 / BOOK</div>
+      <h2 style="font-family:Anton,sans-serif;font-size:clamp(32px,4.6vw,58px);line-height:.95;margin:12px 0 0;text-transform:uppercase">Your build sheet</h2>
+    </div>
+    <p style="margin:0 0 6px auto;max-width:34ch;font-size:14.5px;line-height:1.5;color:rgba(244,243,243,.6)">Four short steps. You'll leave with a confirmed consultation slot and a spec summary our techs actually read.</p>
+  </div>
+
+  <div class="mad-book-grid" style="display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:22px;align-items:start">
+
+    <div style="background:#17171b;background:linear-gradient(180deg,#1a1a1f 0%,#121215 100%);border:1px solid rgba(255,255,255,.1);padding:clamp(20px,3vw,38px)">
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <sc-for list="{{ stepBars }}" as="b" hint-placeholder-count="4">
+          <div style="height:3px;flex:1;background:{{ b.bg }}"></div>
+        </sc-for>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:rgba(244,243,243,.45);margin-bottom:30px">
+        <span>{{ stepLabel }}</span><span>{{ stepCount }}</span>
+      </div>
+
+      <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <h3 style="font-family:Anton,sans-serif;font-size:26px;text-transform:uppercase;margin:0 0 6px;letter-spacing:.01em">What are we building?</h3>
+          <p style="margin:0 0 22px;font-size:14px;color:rgba(244,243,243,.55)">Pick everything you're curious about — nothing is locked in.</p>
+          <div class="mad-chips" style="display:flex;flex-wrap:wrap;gap:10px">
+            <sc-for list="{{ serviceChips }}" as="s" hint-placeholder-count="9">
+              <button onClick="{{ s.onPick }}" style="cursor:pointer;background:{{ s.bg }};color:{{ s.fg }};border:1px solid {{ s.bc }};padding:13px 16px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:9px;text-align:left">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.6">{{ s.num }}</span>{{ s.title }}
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep2 }}">
+        <div>
+          <h3 style="font-family:Anton,sans-serif;font-size:26px;text-transform:uppercase;margin:0 0 6px">The vehicle</h3>
+          <p style="margin:0 0 22px;font-size:14px;color:rgba(244,243,243,.55)">Fitment math starts here, so be precise if you can.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:14px">
+            <label style="display:block">
+              <span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.45);margin-bottom:8px">Year</span>
+              <input value="{{ year }}" onChange="{{ onYear }}" placeholder="2023" style="width:100%;box-sizing:border-box;background:#0c0c0d;border:1px solid rgba(255,255,255,.14);color:#F4F3F3;padding:14px;font-size:15px;outline:none" style-focus="border-color:#E01B24">
+            </label>
+            <label style="display:block">
+              <span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.45);margin-bottom:8px">Make</span>
+              <input value="{{ make }}" onChange="{{ onMake }}" placeholder="Chevrolet" style="width:100%;box-sizing:border-box;background:#0c0c0d;border:1px solid rgba(255,255,255,.14);color:#F4F3F3;padding:14px;font-size:15px;outline:none" style-focus="border-color:#E01B24">
+            </label>
+            <label style="display:block">
+              <span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.45);margin-bottom:8px">Model</span>
+              <input value="{{ model }}" onChange="{{ onModel }}" placeholder="Silverado" style="width:100%;box-sizing:border-box;background:#0c0c0d;border:1px solid rgba(255,255,255,.14);color:#F4F3F3;padding:14px;font-size:15px;outline:none" style-focus="border-color:#E01B24">
+            </label>
+          </div>
+          <div style="margin-top:26px">
+            <span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.45);margin-bottom:10px">Where it's at today</span>
+            <div style="display:flex;flex-wrap:wrap;gap:9px">
+              <sc-for list="{{ stateChips }}" as="c" hint-placeholder-count="3">
+                <button onClick="{{ c.onPick }}" style="cursor:pointer;background:{{ c.bg }};color:{{ c.fg }};border:1px solid {{ c.bc }};padding:11px 15px;font-size:13.5px;font-weight:600">{{ c.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep3 }}">
+        <div>
+          <h3 style="font-family:Anton,sans-serif;font-size:26px;text-transform:uppercase;margin:0 0 6px">Pick your slot</h3>
+          <p style="margin:0 0 22px;font-size:14px;color:rgba(244,243,243,.55)">Consultations run 45 minutes at the shop or over video.</p>
+          <div class="mad-days" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px">
+            <sc-for list="{{ dayChips }}" as="d" hint-placeholder-count="6">
+              <button onClick="{{ d.onPick }}" style="cursor:pointer;background:{{ d.bg }};color:{{ d.fg }};border:1px solid {{ d.bc }};padding:15px 8px;text-align:center">
+                <span style="display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.6">{{ d.dow }}</span>
+                <span style="display:block;font-family:Anton,sans-serif;font-size:25px;margin-top:4px">{{ d.num }}</span>
+                <span style="display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;opacity:.55;margin-top:3px">{{ d.mon }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="margin-top:24px">
+            <span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.45);margin-bottom:10px">Time window</span>
+            <div style="display:flex;flex-wrap:wrap;gap:9px">
+              <sc-for list="{{ timeChips }}" as="t" hint-placeholder-count="4">
+                <button onClick="{{ t.onPick }}" style="cursor:pointer;background:{{ t.bg }};color:{{ t.fg }};border:1px solid {{ t.bc }};padding:11px 15px;font-size:13.5px;font-weight:600">{{ t.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+          <div style="margin-top:24px">
+            <span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.45);margin-bottom:10px">Where</span>
+            <div style="display:flex;flex-wrap:wrap;gap:9px">
+              <sc-for list="{{ placeChips }}" as="p" hint-placeholder-count="3">
+                <button onClick="{{ p.onPick }}" style="cursor:pointer;background:{{ p.bg }};color:{{ p.fg }};border:1px solid {{ p.bc }};padding:11px 15px;font-size:13.5px;font-weight:600">{{ p.label }}</button>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStep4 }}">
+        <div>
+          <h3 style="font-family:Anton,sans-serif;font-size:26px;text-transform:uppercase;margin:0 0 6px">Where do we reach you?</h3>
+          <p style="margin:0 0 22px;font-size:14px;color:rgba(244,243,243,.55)">One human replies — usually inside the hour during shop hours.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:14px">
+            <label style="display:block">
+              <span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.45);margin-bottom:8px">Name</span>
+              <input value="{{ name }}" onChange="{{ onName }}" placeholder="First and last" style="width:100%;box-sizing:border-box;background:#0c0c0d;border:1px solid rgba(255,255,255,.14);color:#F4F3F3;padding:14px;font-size:15px;outline:none" style-focus="border-color:#E01B24">
+            </label>
+            <label style="display:block">
+              <span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.45);margin-bottom:8px">Mobile</span>
+              <input value="{{ tel }}" onChange="{{ onTel }}" placeholder="(407) 000 0000" style="width:100%;box-sizing:border-box;background:#0c0c0d;border:1px solid rgba(255,255,255,.14);color:#F4F3F3;padding:14px;font-size:15px;outline:none" style-focus="border-color:#E01B24">
+            </label>
+            <label style="display:block">
+              <span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.45);margin-bottom:8px">Email</span>
+              <input value="{{ email }}" onChange="{{ onEmail }}" placeholder="you@email.com" style="width:100%;box-sizing:border-box;background:#0c0c0d;border:1px solid rgba(255,255,255,.14);color:#F4F3F3;padding:14px;font-size:15px;outline:none" style-focus="border-color:#E01B24">
+            </label>
+          </div>
+          <label style="display:block;margin-top:18px">
+            <span style="display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.45);margin-bottom:8px">Anything else (optional)</span>
+            <textarea value="{{ notes }}" onChange="{{ onNotes }}" rows="3" placeholder="Wheel size you're after, reference builds, deadlines…" style="width:100%;box-sizing:border-box;background:#0c0c0d;border:1px solid rgba(255,255,255,.14);color:#F4F3F3;padding:14px;font-size:15px;outline:none;resize:vertical" style-focus="border-color:#E01B24"></textarea>
+          </label>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDone }}">
+        <div style="animation:madup .5s ease both">
+          <div style="width:48px;height:48px;display:grid;place-items:center;background:#3FCB6E;color:#0c0c0d;font-size:24px;font-weight:700">✓</div>
+          <h3 style="font-family:Anton,sans-serif;font-size:30px;text-transform:uppercase;margin:20px 0 8px">Slot held for {{ nameOrYou }}</h3>
+          <p style="margin:0 0 22px;font-size:15px;line-height:1.55;color:rgba(244,243,243,.68);max-width:46ch">We've pencilled in <strong style="color:#FF4A52">{{ slotSummary }}</strong>. You'll get a text confirmation with the tech assigned to your build. Want it faster?</p>
+          <div class="mad-btns" style="display:flex;flex-wrap:wrap;gap:10px">
+            <a href="{{ waHref }}" style="background:#E01B24;color:#0c0c0d;font-weight:700;padding:14px 20px;font-size:14px" style-hover="background:#FF4A52">Message us on WhatsApp</a>
+            <button onClick="{{ onReset }}" style="cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,.18);color:#F4F3F3;font-weight:600;padding:14px 20px;font-size:14px" style-hover="border-color:#E01B24">Book another vehicle</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;align-items:center;gap:12px;margin-top:34px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1)">
+          <sc-if value="{{ canBack }}">
+            <button onClick="{{ onBack }}" style="cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,.16);color:rgba(244,243,243,.8);padding:14px 18px;font-size:14px;font-weight:600" style-hover="border-color:#E01B24;color:#F4F3F3">Back</button>
+          </sc-if>
+          <button onClick="{{ onNext }}" style="cursor:{{ nextCursor }};background:{{ nextBg }};color:{{ nextFg }};border:none;padding:15px 26px;font-size:15px;font-weight:700;letter-spacing:.02em;margin-left:auto" style-hover="filter:brightness(1.08)">{{ nextLabel }}</button>
+        </div>
+        <p style="margin:14px 0 0;font-size:12px;color:rgba(244,243,243,.38)">{{ helperText }}</p>
+      </sc-if>
+    </div>
+
+    <aside class="mad-sticky" style="border:1px solid rgba(255,255,255,.1);background:#121215;padding:24px;position:sticky;top:92px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:rgba(244,243,243,.42);padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.09)">SPEC SUMMARY</div>
+      <div style="display:flex;flex-direction:column;gap:16px;padding:18px 0">
+        <sc-for list="{{ summaryRows }}" as="r" hint-placeholder-count="4">
+          <div>
+            <div style="font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,243,243,.4)">{{ r.label }}</div>
+            <div style="font-size:14.5px;line-height:1.45;color:{{ r.color }};margin-top:5px;font-weight:500">{{ r.value }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.09);padding-top:18px;display:flex;flex-direction:column;gap:11px">
+        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;color:rgba(244,243,243,.6)"><span style="color:#3FCB6E">●</span>No deposit to hold a consultation</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;color:rgba(244,243,243,.6)"><span style="color:#3FCB6E">●</span>Written quote before any work starts</div>
+        <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.45;color:rgba(244,243,243,.6)"><span style="color:#3FCB6E">●</span>Two locations: Orlando &amp; Puerto Rico</div>
+      </div>
+      <a href="{{ telHref }}" style="display:block;margin-top:20px;text-align:center;border:1px solid rgba(255,255,255,.16);color:#F4F3F3;padding:13px;font-weight:600;font-size:13.5px" style-hover="border-color:#E01B24">Rather talk? {{ phone }}</a>
+    </aside>
+  </div>
+</section>
+
+<section id="services" style="border-top:1px solid rgba(255,255,255,.09);background:#111113">
+  <div class="mad-wrap mad-pad" style="max-width:1280px;margin:0 auto;padding:78px 22px 90px">
+    <div class="mad-sec-head" data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:18px;margin-bottom:38px">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;color:#E01B24">02 / CAPABILITIES</div>
+        <h2 style="font-family:Anton,sans-serif;font-size:clamp(32px,4.6vw,58px);line-height:.95;margin:12px 0 0;text-transform:uppercase">Nine ways in</h2>
+      </div>
+      <p style="margin:0 0 6px auto;max-width:36ch;font-size:14.5px;line-height:1.5;color:rgba(244,243,243,.6)">Every service is run in-house by the same crew, so a wrap, a drop and a wheel package land as one cohesive build.</p>
+    </div>
+    <div class="mad-svc-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.1);border-left:1px solid rgba(255,255,255,.1)">
+      <sc-for list="{{ services }}" as="s" hint-placeholder-count="9">
+        <a data-reveal href="{{ s.url }}" style="min-width:0;border-right:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);background:#101013;padding:0;display:flex;flex-direction:column;color:#F4F3F3" style-hover="background:#171512">
+          <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:#141418">
+            <img src="{{ s.img }}" alt="{{ s.title }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;opacity:.82;filter:saturate(.9)">
+            <span style="position:absolute;top:12px;left:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;background:rgba(12,12,13,.78);padding:5px 8px;color:#FF4A52">{{ s.num }}</span>
+          </div>
+          <div style="padding:20px 20px 24px;display:flex;flex-direction:column;gap:9px;flex:1">
+            <h3 style="font-family:Anton,sans-serif;font-size:19px;text-transform:uppercase;letter-spacing:.01em;margin:0">{{ s.title }}</h3>
+            <p style="margin:0;font-size:13.5px;line-height:1.5;color:rgba(244,243,243,.58);text-wrap:pretty">{{ s.desc }}</p>
+            <span style="margin-top:auto;padding-top:12px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#E01B24">View details →</span>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="work" class="mad-pad-top" style="border-top:1px solid rgba(255,255,255,.09);padding:70px 0 0;overflow:hidden">
+  <div class="mad-wrap" style="max-width:1280px;margin:0 auto;padding:0 22px 34px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;color:#E01B24">03 / OUT OF THE SHOP</div>
+    <h2 style="font-family:Anton,sans-serif;font-size:clamp(32px,4.6vw,58px);line-height:.95;margin:12px 0 0;text-transform:uppercase">Recent metal</h2>
+  </div>
+  <div class="mad-marquee" style="display:flex;width:max-content;gap:14px;animation:madmarq 48s linear infinite;padding-bottom:70px">
+    <sc-for list="{{ marquee }}" as="m" hint-placeholder-count="10">
+      <div style="width:clamp(240px,26vw,380px);aspect-ratio:4/3;overflow:hidden;background:#141418;border:1px solid rgba(255,255,255,.08)">
+        <img src="{{ m.img }}" alt="MAD Custom build" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section id="about" style="border-top:1px solid rgba(255,255,255,.09);background:#111113">
+  <div class="mad-wrap mad-about-top" style="max-width:1280px;margin:0 auto;padding:84px 22px 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:52px;align-items:center">
+    <div data-reveal>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;color:#E01B24">04 / OUR STORY</div>
+      <h2 style="font-family:Anton,sans-serif;font-size:clamp(30px,4.2vw,56px);line-height:.98;margin:14px 0 10px;text-transform:uppercase">A family legacy<br>since 1973</h2>
+      <div style="font-family:Anton,sans-serif;font-size:clamp(17px,1.9vw,23px);color:#FF4A52;text-transform:uppercase;letter-spacing:.03em;margin-bottom:22px">Three generations. One passion.</div>
+      <p style="margin:0 0 16px;font-size:clamp(15px,1.5vw,17.5px);line-height:1.68;color:rgba(244,243,243,.74);text-wrap:pretty">The story of <strong style="color:#F4F3F3">MAD Custom</strong> began in 1973 with the vision, hard work and passion of our grandfather, José Rodríguez — affectionately known as <em style="color:#F4F3F3;font-style:normal">“Cheo Colega.”</em></p>
+      <p style="margin:0;font-size:15.5px;line-height:1.68;color:rgba(244,243,243,.62);text-wrap:pretty">Cheo laid the foundation for the values that still define our family today: honest work, commitment to our customers, and a genuine passion for the automotive industry. What began as one man's dream became a legacy passed from generation to generation.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" data-reveal>
+      <img src="https://madcustomcars.com/wp-content/uploads/2026/03/DSC3572-scaled.jpeg" alt="Shop floor" loading="lazy" style="width:100%;height:0;min-height:100%;box-sizing:border-box;object-fit:cover;grid-row:span 2;border:1px solid rgba(255,255,255,.08)">
+      <img src="https://madcustomcars.com/wp-content/uploads/2026/03/DSC4056-scaled.jpeg" alt="Wheel detail" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid rgba(255,255,255,.08)">
+      <img src="https://madcustomcars.com/wp-content/uploads/2026/03/DSC4177-scaled.jpeg" alt="Finished build" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid rgba(255,255,255,.08)">
+    </div>
+  </div>
+
+  <div class="mad-wrap" style="max-width:1280px;margin:0 auto;padding:20px 22px 30px">
+    <div class="mad-era-grid" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.1)">
+      <sc-for list="{{ eras }}" as="e" hint-placeholder-count="4">
+        <article data-reveal style="min-width:0;background:#101013;padding:28px 24px 30px;display:flex;flex-direction:column;gap:12px;border-top:3px solid {{ e.rule }}">
+          <div style="font-family:Anton,sans-serif;font-size:40px;line-height:1;color:#F4F3F3;letter-spacing:.01em">{{ e.year }}</div>
+          <h3 style="margin:0;font-family:Anton,sans-serif;font-size:17px;text-transform:uppercase;letter-spacing:.02em;color:#FF4A52">{{ e.title }}</h3>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:rgba(244,243,243,.64);text-wrap:pretty">{{ e.body }}</p>
+          <div style="margin-top:auto;padding-top:14px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:rgba(244,243,243,.38)">{{ e.tag }}</div>
+        </article>
+      </sc-for>
+    </div>
+  </div>
+
+  <div class="mad-wrap" style="max-width:1280px;margin:0 auto;padding:14px 22px 30px" data-reveal>
+    <div style="border:1px solid rgba(224,27,36,.34);background:linear-gradient(120deg,rgba(224,27,36,.12),rgba(12,12,13,0) 60%);padding:clamp(24px,3.4vw,42px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:32px;align-items:center">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:#FF4A52;margin-bottom:12px">IN MEMORY — CARLY</div>
+        <h3 style="margin:0 0 14px;font-family:Anton,sans-serif;font-size:clamp(24px,2.8vw,34px);line-height:1.05;text-transform:uppercase">Carly changed the game in Puerto Rico</h3>
+        <p style="margin:0;font-size:15.5px;line-height:1.68;color:rgba(244,243,243,.72);text-wrap:pretty">Carlos Rodríguez — “Carly” — arrived in 2010 with a different vision and an extraordinary passion for the industry. He modernized the business, raised the standard, and led us to becoming the <strong style="color:#F4F3F3">#1 store in wheel and tire sales in Puerto Rico</strong>. His impact went far beyond product: he built a culture and an entire experience around automotive customization.</p>
+      </div>
+      <div class="mad-carly-quote" style="border-left:2px solid rgba(224,27,36,.5);padding-left:24px">
+        <p style="margin:0 0 12px;font-size:15.5px;line-height:1.7;color:rgba(244,243,243,.68);text-wrap:pretty">Today Carly rests with the Lord, but his vision, his lessons and his legacy remain alive in every step we take. His absence is deeply felt — his legacy keeps driving us forward.</p>
+        <div style="font-family:Anton,sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:.04em;color:#FF4A52">We remember Carly with love.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mad-wrap mad-pad-bottom" style="max-width:1280px;margin:0 auto;padding:16px 22px 84px" data-reveal>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;color:rgba(244,243,243,.42);margin-bottom:18px">THE LEGACY CONTINUES — FIVE DECADES, FOUR NAMES</div>
+    <div class="mad-lineage" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:30px">
+      <sc-for list="{{ lineage }}" as="l" hint-placeholder-count="4">
+        <div class="mad-lineage-item" style="display:flex;align-items:center;gap:12px">
+          <span class="mad-lineage-name" style="border:1px solid {{ l.bc }};background:{{ l.bg }};color:{{ l.fg }};padding:12px 16px;font-size:13.5px;font-weight:600;white-space:nowrap">{{ l.name }}</span>
+          <span class="mad-lineage-arrow" style="color:#E01B24;font-family:'JetBrains Mono',monospace;font-size:15px">{{ l.arrow }}</span>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:26px;padding-top:26px;border-top:1px solid rgba(255,255,255,.1)">
+      <p style="margin:0;font-size:15px;line-height:1.68;color:rgba(244,243,243,.64);text-wrap:pretty">More than five decades of hard work, sacrifice, innovation and evolution. We are a family business built generation after generation — every member has given their vision, effort and heart to keep this dream growing.</p>
+      <p style="margin:0;font-size:15px;line-height:1.68;color:rgba(244,243,243,.64);text-wrap:pretty">We honor the path built by those who came before us, and we keep working so the generations that follow can carry this legacy even further.</p>
+      <div>
+        <div style="font-family:Anton,sans-serif;font-size:clamp(18px,2vw,24px);line-height:1.25;text-transform:uppercase">We honor our past.<br>We pursue excellence in the present.<br>We build the future.</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-top:20px">
+          <img src="assets/mad-shield.png" alt="MAD Custom" style="height:52px;width:auto;display:block">
+          <div style="font-family:Anton,sans-serif;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:#FF4A52">Family built.<br>Driven by legacy.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-top:1px solid rgba(255,255,255,.09)">
+  <div class="mad-wrap mad-pad" style="max-width:1280px;margin:0 auto;padding:72px 22px">
+    <div class="mad-ig-head" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:30px">
+      <span style="width:8px;height:8px;border-radius:50%;background:#3FCB6E;animation:madpulse 1.8s ease-in-out infinite"></span>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;color:rgba(244,243,243,.6)">05 / LIVE FROM INSTAGRAM</div>
+      <a href="https://www.instagram.com/madcustomfl/" target="_blank" rel="noopener" style="font-family:Anton,sans-serif;font-size:clamp(26px,3.4vw,42px);text-transform:uppercase;color:#F4F3F3;letter-spacing:.01em;margin-left:4px" style-hover="color:#FF4A52">@madcustomfl</a>
+      <a href="https://www.instagram.com/madcustomfl/" target="_blank" rel="noopener" class="mad-ig-btn" style="margin-left:auto;background:#E01B24;color:#0c0c0d;font-weight:700;padding:13px 20px;font-size:14px" style-hover="background:#FF4A52">Follow the feed</a>
+    </div>
+    <div class="mad-ig-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,180px),1fr));gap:10px">
+      <sc-for list="{{ insta }}" as="i" hint-placeholder-count="12">
+        <a href="https://www.instagram.com/madcustomfl/" target="_blank" rel="noopener" style="position:relative;display:block;aspect-ratio:1/1;overflow:hidden;background:#141418;border:1px solid rgba(255,255,255,.07)" style-hover="border-color:#E01B24">
+          <img src="{{ i.img }}" alt="Instagram post" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+        </a>
+      </sc-for>
+    </div>
+    <p style="margin:18px 0 0;font-size:12px;color:rgba(244,243,243,.35);font-family:'JetBrains Mono',monospace;letter-spacing:.06em">Grid auto-syncs with the @madcustomfl feed once the Instagram token is connected.</p>
+  </div>
+</section>
+
+<section style="border-top:1px solid rgba(255,255,255,.09);background:#111113">
+  <div class="mad-wrap mad-pad" style="max-width:1280px;margin:0 auto;padding:76px 22px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;color:#E01B24">06 / CUSTOMERS</div>
+    <h2 style="font-family:Anton,sans-serif;font-size:clamp(30px,4vw,52px);line-height:.98;margin:12px 0 34px;text-transform:uppercase">Five stars, no asterisks</h2>
+    <div class="mad-reviews" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+      <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
+        <figure data-reveal style="margin:0;background:#101013;border:1px solid rgba(255,255,255,.1);padding:24px;display:flex;flex-direction:column;gap:14px">
+          <div style="color:#FF4A52;letter-spacing:.22em;font-size:14px">★★★★★</div>
+          <blockquote style="margin:0;font-size:14.5px;line-height:1.6;color:rgba(244,243,243,.76);text-wrap:pretty">{{ r.quote }}</blockquote>
+          <figcaption style="margin-top:auto;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);font-size:13px;color:rgba(244,243,243,.5)"><strong style="color:#F4F3F3;font-weight:600">{{ r.who }}</strong> · {{ r.when }}</figcaption>
+        </figure>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="border-top:1px solid rgba(255,255,255,.09)">
+  <div class="mad-wrap mad-pad mad-faq-grid" style="max-width:1280px;margin:0 auto;padding:76px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:48px;align-items:start">
+    <div class="mad-sticky" data-reveal style="position:sticky;top:98px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;color:#E01B24">07 / QUESTIONS</div>
+      <h2 style="font-family:Anton,sans-serif;font-size:clamp(30px,4vw,52px);line-height:.98;margin:12px 0 18px;text-transform:uppercase">What people ask before they book</h2>
+      <p style="margin:0 0 26px;font-size:15px;line-height:1.65;color:rgba(244,243,243,.62);max-width:40ch;text-wrap:pretty">What the work involves, what we need from you, and how long your car is with us. Straight answers — including the ones where the honest answer is “it depends on the car.”</p>
+      <div class="mad-btns" style="display:flex;flex-wrap:wrap;gap:10px">
+        <a href="{{ waHref }}" style="background:#E01B24;color:#0c0c0d;font-weight:700;padding:14px 20px;font-size:14px" style-hover="background:#FF4A52">Ask us something else</a>
+        <a href="#services" style="border:1px solid rgba(255,255,255,.2);color:#F4F3F3;font-weight:600;padding:14px 20px;font-size:14px" style-hover="border-color:#E01B24">Browse services</a>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.12)">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+        <div data-reveal style="border-bottom:1px solid rgba(255,255,255,.12)">
+          <button class="mad-faq-q" onClick="{{ f.onToggle }}" aria-expanded="{{ f.expanded }}" style="cursor:pointer;width:100%;background:{{ f.rowBg }};border:none;color:{{ f.qColor }};text-align:left;padding:22px 14px 22px 0;display:flex;gap:16px;align-items:center;font-size:16.5px;font-weight:600;line-height:1.4;transition:color .25s ease,background .25s ease" style-hover="color:#FF4A52">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#E01B24;flex:none">{{ f.num }}</span>
+            <span style="flex:1;text-wrap:pretty">{{ f.q }}</span>
+            <span style="flex:none;width:26px;height:26px;display:grid;place-items:center;border:1px solid {{ f.iconBc }};background:{{ f.iconBg }};color:{{ f.iconFg }};transition:transform .42s cubic-bezier(.22,.7,.2,1),background .25s ease,border-color .25s ease;transform:rotate({{ f.iconRot }})">
+              <span style="font-size:15px;line-height:1;font-weight:700">+</span>
+            </span>
+          </button>
+          <div style="display:grid;grid-template-rows:{{ f.rows }};transition:grid-template-rows .44s cubic-bezier(.22,.7,.2,1)">
+            <div style="overflow:hidden;min-height:0;opacity:{{ f.bodyOpacity }};transition:opacity .34s ease {{ f.bodyDelay }}">
+              <p class="mad-faq-a" style="margin:0;padding:0 0 24px 32px;font-size:15px;line-height:1.7;color:rgba(244,243,243,.66);max-width:62ch;text-wrap:pretty">{{ f.a }}</p>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="position:relative;border-top:1px solid rgba(255,255,255,.09);overflow:hidden">
+  <div style="position:absolute;inset:0;background-image:url(https://madcustomcars.com/wp-content/uploads/2026/03/DSC4114-scaled.jpeg);background-size:cover;background-position:center"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,12,13,.82),rgba(12,12,13,.94))"></div>
+  <div class="mad-wrap mad-pad" style="position:relative;max-width:1280px;margin:0 auto;padding:90px 22px;text-align:center">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;color:#FF4A52">1:1 WITH MAD CUSTOM</div>
+    <h2 style="font-family:Anton,sans-serif;font-size:clamp(34px,6vw,86px);line-height:.92;margin:16px auto 20px;text-transform:uppercase;max-width:20ch">Bring the vision. We'll handle the rest.</h2>
+    <p style="margin:0 auto;max-width:58ch;font-size:16px;line-height:1.6;color:rgba(244,243,243,.72)">A personalized consultation: technical evaluation, design direction, and a tailored customization plan — precise, cohesive, unmistakably yours.</p>
+    <div class="mad-btns" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:34px">
+      <a href="#book" style="background:#E01B24;color:#0c0c0d;font-weight:700;padding:18px 30px;font-size:15.5px" style-hover="background:#FF4A52">Start my build sheet</a>
+      <a href="{{ telHref }}" style="border:1px solid rgba(255,255,255,.22);color:#F4F3F3;font-weight:600;padding:18px 28px;font-size:15.5px" style-hover="border-color:#E01B24">Call {{ phone }}</a>
+    </div>
+  </div>
+</section>
+
+<footer style="border-top:1px solid rgba(255,255,255,.09);background:#090909">
+  <div class="mad-wrap mad-footer-grid" style="max-width:1280px;margin:0 auto;padding:60px 22px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:40px">
+    <div>
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+        <img src="assets/mad-shield.png" alt="MAD Custom" style="height:58px;width:auto;display:block">
+        <img src="assets/mad-wordmark.png" alt="" style="height:34px;width:auto;display:block">
+      </div>
+      <p style="margin:0;font-size:13.5px;line-height:1.6;color:rgba(244,243,243,.5);max-width:34ch">High-end automotive customization. Orlando, Florida &amp; Barceloneta, Puerto Rico.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
+        <sc-for list="{{ socials }}" as="s" hint-placeholder-count="5">
+          <a href="{{ s.url }}" target="_blank" rel="noopener" style="border:1px solid rgba(255,255,255,.14);color:rgba(244,243,243,.75);padding:9px 13px;font-size:12.5px;font-weight:600" style-hover="border-color:#E01B24;color:#F4F3F3">{{ s.label }}</a>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,243,243,.4);margin-bottom:14px">Services</div>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <sc-for list="{{ services }}" as="s" hint-placeholder-count="9">
+          <a href="{{ s.url }}" style="font-size:13.5px;color:rgba(244,243,243,.68)" style-hover="color:#FF4A52">{{ s.title }}</a>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,243,243,.4);margin-bottom:14px">Florida</div>
+      <p style="margin:0 0 10px;font-size:13.5px;line-height:1.6;color:rgba(244,243,243,.62)">19 N Westmoreland Dr,<br>Orlando, FL 32805</p>
+      <a href="tel:+14072864426" style="font-family:'JetBrains Mono',monospace;font-size:13px">+1 (407) 286 4426</a>
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,243,243,.4);margin:26px 0 14px">Puerto Rico</div>
+      <p style="margin:0 0 10px;font-size:13.5px;line-height:1.6;color:rgba(244,243,243,.62)">Carr. 140, Km. 61.8,<br>Barceloneta, PR 00617</p>
+      <a href="tel:+17878465115" style="font-family:'JetBrains Mono',monospace;font-size:13px">+1 (787) 846 5115</a>
+    </div>
+    <div>
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,243,243,.4);margin-bottom:14px">Shop hours</div>
+      <p style="margin:0 0 18px;font-size:13.5px;line-height:1.6;color:rgba(244,243,243,.62)">Monday – Friday<br>08:00 – 18:00</p>
+      <a href="mailto:madcustomfl@outlook.com" style="font-size:13.5px">madcustomfl@outlook.com</a>
+      <a href="#book" style="display:block;margin-top:22px;text-align:center;background:#E01B24;color:#0c0c0d;font-weight:700;padding:14px;font-size:14px" style-hover="background:#FF4A52">Book your slot</a>
+    </div>
+  </div>
+  <div class="mad-wrap" style="max-width:1280px;margin:0 auto;padding:18px 22px 96px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:rgba(244,243,243,.38)">
+    <span>© 2026 MAD Custom</span>
+    <a href="#" style="color:rgba(244,243,243,.5)">Terms &amp; Conditions</a>
+    <a href="#" style="color:rgba(244,243,243,.5)">Privacy Policy</a>
+  </div>
+</footer>
+
+<div class="mad-mbar" style="position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(12,12,13,.94);backdrop-filter:blur(12px);border-top:1px solid rgba(255,255,255,.12);display:flex;gap:1px">
+  <a href="{{ telHref }}" style="flex:1;text-align:center;padding:16px 10px;font-size:13.5px;font-weight:600;color:#F4F3F3" style-hover="background:rgba(255,255,255,.05)">Call</a>
+  <a href="{{ waHref }}" style="flex:1;text-align:center;padding:16px 10px;font-size:13.5px;font-weight:600;color:#F4F3F3;border-left:1px solid rgba(255,255,255,.12)" style-hover="background:rgba(255,255,255,.05)">WhatsApp</a>
+  <a href="#book" style="flex:1.4;text-align:center;padding:16px 10px;font-size:13.5px;font-weight:700;background:#E01B24;color:#0c0c0d" style-hover="background:#FF4A52">Book in 60 seconds</a>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+1 (407) 286 4426&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact&quot;},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://wa.link/c2aabg&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact&quot;},&quot;instaRows&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:1,&quot;max&quot;:3,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Layout&quot;}}">
+const IMG = "https://madcustomcars.com/wp-content/uploads/2026/03/";
+const SERVICES = [
+  ["01","Rims & Tires","Precision wheel and tire selection with exact fitment specs to enhance stance, performance and safety.","rims-tires","DSC4277-scaled.jpeg"],
+  ["02","Performance Suspension","Lowering or lift solutions that improve handling and presence while keeping comfort and control.","performance-suspension-systems","DSC3572-scaled.jpeg"],
+  ["03","Premium Vinyl Wrap","High-end vinyl that transforms colour and finish while protecting the original paint underneath.","premium-vinyl-wrap-studio","DSC4177-scaled.jpeg"],
+  ["04","Paint Protection Film","Self-healing film that shields paint from chips, scratches and road debris. Invisible protection.","paint-protection-film-ppf","DSC4056-scaled.jpeg"],
+  ["05","Detailing & Paint Correction","Multi-stage correction and interior refinement for depth, clarity and showroom-level shine.","luxury-detailing-paint-correction","DSC01237-scaled.jpeg"],
+  ["06","Bespoke Custom Builds","Full transformations integrating performance, aesthetics and craftsmanship into one-of-one builds.","bespoke-custom-builds","DSC3537-scaled.jpeg"],
+  ["07","Upholstery","Interior restoration and customization in premium materials, built for comfort and durability.","upholstery","DSC01735-scaled.jpeg"],
+  ["08","Window Tint","High-performance film for privacy, heat rejection and UV protection with a sleek finish.","window-tint","DSC3559-scaled.jpeg"],
+  ["09","Performance Exhaust","Exhaust upgrades tuned for airflow, throttle response and a refined but aggressive tone.","performance-exhaust-systems","DSC4114-scaled.jpeg"]
+];
+const GALLERY = ["DSC4114-scaled.jpeg","DSC3539-scaled.jpeg","DSC4123-scaled.jpeg","DSC3537-scaled.jpeg","DSC4277-scaled.jpeg","DSC01237-scaled.jpeg","DSC3572-scaled.jpeg","DSC4056-scaled.jpeg","DSC4177-scaled.jpeg","DSC01735-scaled.jpeg"];
+const INSTA = ["madcustomfl_1772583481689-1-1.jpeg","DSC4277-scaled.jpeg","madcustomfl_1772583503776.jpeg","DSC01237-scaled.jpeg","madcustomfl_1772583481689-2.jpeg","DSC01735-scaled.jpeg","DSC4056-scaled.jpeg","DSC3572-scaled.jpeg","DSC3559-scaled.jpeg","DSC4177-scaled.jpeg","DSC3539-scaled.jpeg","DSC4123-scaled.jpeg"];
+const FAQ = [
+  ["What makes MAD Custom different?","We treat detailing and customization as craftsmanship, not maintenance: advanced techniques, premium-grade products and meticulous attention to detail on every vehicle."],
+  ["How do ceramic coatings benefit my vehicle?","Our ceramic systems deliver gloss and hydrophobic performance while defending against environmental contaminants — protecting the integrity and resale value of the car."],
+  ["Can paint correction safely remove imperfections?","Yes. Our multi-stage process removes swirl marks, light scratches and surface defects while preserving the factory finish, leaving mirror-like clarity."],
+  ["Do you tailor work to specific vehicles?","Always. From daily drivers to collector models, every programme is designed around the vehicle's condition, finish and character."],
+  ["How often should a vehicle be professionally detailed?","It depends on usage and storage. At your consultation we'll set a maintenance interval that keeps the car impeccable year-round."],
+  ["How long does a booking take to confirm?","Fill in the build sheet and you'll have a text or email confirmation from a real person — usually within the hour during shop hours (Mon–Fri, 08:00–18:00)."],
+  ["Do I pay anything to book a consultation?","No. Consultations are free and there's no deposit to hold a slot. You'll get a written quote before any work begins."],
+  ["How long will my vehicle be in the shop?","Window tint and detailing are typically same-day. Wheels and suspension usually take one to two days. Full wraps, PPF and bespoke builds are scheduled by project — we give you a firm timeline with your quote."],
+  ["Can you source wheels that aren't in stock?","Yes. We work directly with the major forged and cast brands and can order almost any fitment, finish or custom offset — and we'll confirm clearance before ordering."],
+  ["Are you only in Orlando?","We run two shops: Orlando, Florida and Barceloneta, Puerto Rico — more than five decades of the same family in the business. You can pick your location in the build sheet, or book a video consultation."],
+  ["Is your work guaranteed?","Every installation is backed by our workmanship guarantee, plus the manufacturer warranty on films, coatings and wheels. If something isn't right, bring it back to us."]
+];
+const REVIEWS = [
+  ["Carlos M. Rivera","Dec 2025","MAD Custom exceeded my expectations. The wheel fitment and suspension setup completely transformed my truck. The attention to detail and professionalism truly sets them apart."],
+  ["Melissa Martinez","Jan 2026","I trusted MAD Custom with a full build and couldn't be happier. Quality, communication and craftsmanship were top-level. Definitely the go-to shop for serious customization."],
+  ["Daniel Torres","Feb 2026","From consultation to final delivery the experience was outstanding. Perfect wheels, flawless PPF. My car looks aggressive yet refined — you can tell they take pride in their work."]
+];
+const STEP_TITLES = ["SERVICES","VEHICLE","SLOT","CONTACT"];
+
+class Component extends DCLogic {
+  state = { step: 1, picks: [], cond: "", year: "", make: "", model: "", day: null, time: "", place: "", name: "", tel: "", email: "", notes: "", done: false, faq: -1 };
+
+  componentDidMount() {
+    this.heroReel();
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const seen = new WeakSet();
+    const arm = () => {
+      document.querySelectorAll("[data-reveal]").forEach((el, i) => {
+        if (seen.has(el)) return;
+        seen.add(el);
+        el.style.opacity = "0";
+        el.style.transform = "translateY(26px)";
+        el.style.transition = "opacity .7s cubic-bezier(.22,.7,.2,1) " + ((i % 6) * 70) + "ms, transform .7s cubic-bezier(.22,.7,.2,1) " + ((i % 6) * 70) + "ms";
+        this._io.observe(el);
+      });
+    };
+    this._io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.style.opacity = "1";
+        e.target.style.transform = "none";
+        this._io.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+    arm();
+    this._armTimer = setInterval(arm, 900);
+    setTimeout(() => clearInterval(this._armTimer), 6000);
+  }
+
+  heroReel() {
+    const v = document.querySelector("[data-hero-reel]");
+    if (!v) return;
+    const silence = () => { v.muted = true; v.defaultMuted = true; v.volume = 0; v.playsInline = true; };
+    silence();
+    this._silenceTimer = setInterval(silence, 1000);
+    let armed = false;
+    const go = () => {
+      silence();
+      const p = v.play();
+      if (p && p.catch) p.catch(() => {
+        if (armed) return;
+        armed = true;
+        const retry = () => { armed = false; go(); };
+        ["pointerdown", "keydown", "scroll", "touchstart"].forEach(ev =>
+          document.addEventListener(ev, retry, { once: true, passive: true }));
+      });
+    };
+    v.addEventListener("playing", () => { v.style.opacity = "1"; }, { once: true });
+    go();
+  }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+    clearInterval(this._silenceTimer);
+    clearInterval(this._armTimer);
+  }
+
+  chip(active) {
+    return active
+      ? { bg: "#E01B24", fg: "#0c0c0d", bc: "#E01B24" }
+      : { bg: "rgba(255,255,255,.03)", fg: "rgba(244,243,243,.86)", bc: "rgba(255,255,255,.14)" };
+  }
+
+  days() {
+    const out = [], dow = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], mon = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const d = new Date();
+    while (out.length < 6) {
+      d.setDate(d.getDate() + 1);
+      if (d.getDay() === 0) continue;
+      out.push({ key: d.toISOString().slice(0, 10), dow: dow[d.getDay()], num: String(d.getDate()).padStart(2, "0"), mon: mon[d.getMonth()] });
+    }
+    return out;
+  }
+
+  valid(step) {
+    const s = this.state;
+    if (step === 1) return s.picks.length > 0;
+    if (step === 2) return s.make.trim() !== "" && s.model.trim() !== "";
+    if (step === 3) return !!s.day && s.time !== "";
+    return s.name.trim() !== "" && (s.tel.trim() !== "" || s.email.trim() !== "");
+  }
+
+  set(k) { return e => this.setState({ [k]: e.target.value }); }
+
+  renderVals() {
+    const s = this.state;
+    const phone = this.props.phone ?? "+1 (407) 286 4426";
+    const wa = this.props.whatsapp ?? "https://wa.link/c2aabg";
+    const days = this.days();
+    const ok = this.valid(s.step);
+    const dayObj = days.find(d => d.key === s.day);
+    const slotSummary = dayObj ? dayObj.dow + " " + dayObj.num + " " + dayObj.mon + ", " + (s.time || "morning") + (s.place ? " · " + s.place : "") : "your chosen slot";
+    const vehicle = [s.year, s.make, s.model].filter(Boolean).join(" ");
+
+    return {
+      phone, waHref: wa, telHref: "tel:+14072864426",
+      trust: [{ k: "3,160+", v: "Cars delivered" }, { k: "35K+", v: "Shop hours" }, { k: "5.0", v: "Google rating" }, { k: "2", v: "Locations" }],
+      services: SERVICES.map(x => ({ num: x[0], title: x[1], desc: x[2], url: "https://madcustomcars.com/" + x[3] + "/", img: IMG + x[4] })),
+      marquee: GALLERY.concat(GALLERY).map(f => ({ img: IMG + f })),
+      insta: INSTA.slice(0, (this.props.instaRows ?? 2) * 6).map(f => ({ img: IMG + f })),
+      eras: [
+        { year: "1973", title: "Magueyes Tires Service", tag: "FIRST GENERATION · CHEO COLEGA", rule: "#E01B24", body: "José “Cheo Colega” Rodríguez opens the doors, serving the tire and automotive needs of the local community — and setting the values we still run on." },
+        { year: "2000", title: "The second generation", tag: "CARLOS RODRÍGUEZ RAMOS", rule: "rgba(224,27,36,.6)", body: "His son Carlos joined with new ideas and determination, growing the shop into Magueyes Auto Accesorios and strengthening the family name in the industry." },
+        { year: "2010", title: "Carly changes the game", tag: "MAGUEYES AUTO DESING", rule: "rgba(224,27,36,.6)", body: "Carly transformed how wheels, tires and accessories were sold in Puerto Rico — modernizing the business and taking it to #1 in wheel and tire sales." },
+        { year: "2021", title: "The legacy reaches Orlando", tag: "MAD CUSTOM FLORIDA", rule: "#E01B24", body: "José Emanuel Rodríguez Colón carried the vision to Florida: one complete automotive destination built on quality, innovation and professionalism." }
+      ],
+      lineage: [
+        { name: "Magueyes Tires Service", arrow: "→", bg: "rgba(255,255,255,.03)", fg: "rgba(244,243,243,.7)", bc: "rgba(255,255,255,.14)" },
+        { name: "Magueyes Auto Accesorios", arrow: "→", bg: "rgba(255,255,255,.03)", fg: "rgba(244,243,243,.7)", bc: "rgba(255,255,255,.14)" },
+        { name: "Magueyes Auto Desing", arrow: "→", bg: "rgba(255,255,255,.03)", fg: "rgba(244,243,243,.7)", bc: "rgba(255,255,255,.14)" },
+        { name: "MAD Custom Florida", arrow: "", bg: "#E01B24", fg: "#0c0c0d", bc: "#E01B24" }
+      ],
+      pillars: [
+        { t: "Master craft", d: "Elite specialists, uncompromising finishes." },
+        { t: "Bespoke programs", d: "Built around your vehicle's character." },
+        { t: "Premium protection", d: "Coatings engineered to last." },
+        { t: "White-glove aftercare", d: "Guidance long after pickup." }
+      ],
+      reviews: REVIEWS.map(r => ({ who: r[0], when: r[1], quote: r[2] })),
+      faqs: FAQ.slice(0, 5).map((f, i) => {
+        const open = s.faq === i;
+        return {
+          num: String(i + 1).padStart(2, "0"), q: f[0], a: f[1],
+          open, expanded: open ? "true" : "false",
+          rows: open ? "1fr" : "0fr",
+          bodyOpacity: open ? 1 : 0,
+          bodyDelay: open ? ".08s" : "0s",
+          qColor: open ? "#FF4A52" : "#F4F3F3",
+          rowBg: open ? "rgba(224,27,36,.05)" : "transparent",
+          iconRot: open ? "135deg" : "0deg",
+          iconBg: open ? "#E01B24" : "transparent",
+          iconFg: open ? "#0c0c0d" : "#E01B24",
+          iconBc: open ? "#E01B24" : "rgba(224,27,36,.5)",
+          onToggle: () => this.setState({ faq: open ? -1 : i })
+        };
+      }),
+      socials: [
+        { label: "WhatsApp", url: wa }, { label: "Instagram", url: "https://www.instagram.com/madcustomfl/" },
+        { label: "Facebook", url: "https://www.facebook.com/MADCUSTOMFLORIDA" }, { label: "YouTube", url: "https://www.youtube.com/@MadCustomTV" },
+        { label: "TikTok", url: "https://www.tiktok.com/@madcustomfl" }
+      ],
+
+      isStep1: !s.done && s.step === 1, isStep2: !s.done && s.step === 2,
+      isStep3: !s.done && s.step === 3, isStep4: !s.done && s.step === 4,
+      isDone: s.done, showNav: !s.done, canBack: s.step > 1,
+      stepBars: [1, 2, 3, 4].map(n => ({ bg: s.done || n <= s.step ? "#E01B24" : "rgba(255,255,255,.12)" })),
+      stepLabel: "STEP " + s.step + " — " + STEP_TITLES[s.step - 1],
+      stepCount: "0" + s.step + " / 04",
+      nextLabel: s.step === 4 ? "Hold my slot" : "Continue",
+      nextBg: ok ? "#E01B24" : "rgba(255,255,255,.08)",
+      nextFg: ok ? "#0c0c0d" : "rgba(244,243,243,.35)",
+      nextCursor: ok ? "pointer" : "not-allowed",
+      helperText: ok
+        ? (s.step === 4 ? "No deposit. We confirm by text within the hour." : "Looks good — keep going.")
+        : ["Pick at least one service to continue.", "Make and model are required.", "Choose a day and a time window.", "Name plus a phone or email, and you're done."][s.step - 1],
+
+      serviceChips: SERVICES.map(x => Object.assign({ num: x[0], title: x[1], onPick: () => this.setState(st => ({ picks: st.picks.includes(x[1]) ? st.picks.filter(p => p !== x[1]) : st.picks.concat(x[1]) })) }, this.chip(s.picks.includes(x[1])))),
+      stateChips: ["Factory / stock", "Partly modified", "Full build in progress"].map(l => Object.assign({ label: l, onPick: () => this.setState({ cond: l }) }, this.chip(s.cond === l))),
+      dayChips: days.map(d => Object.assign({}, d, { onPick: () => this.setState({ day: d.key }) }, this.chip(s.day === d.key))),
+      timeChips: ["Morning", "Midday", "Afternoon", "After 5pm"].map(l => Object.assign({ label: l, onPick: () => this.setState({ time: l }) }, this.chip(s.time === l))),
+      placeChips: ["Orlando shop", "Puerto Rico shop", "Video call"].map(l => Object.assign({ label: l, onPick: () => this.setState({ place: l }) }, this.chip(s.place === l))),
+
+      year: s.year, make: s.make, model: s.model, name: s.name, tel: s.tel, email: s.email, notes: s.notes,
+      onYear: this.set("year"), onMake: this.set("make"), onModel: this.set("model"),
+      onName: this.set("name"), onTel: this.set("tel"), onEmail: this.set("email"), onNotes: this.set("notes"),
+
+      onNext: () => { if (!ok) return; s.step === 4 ? this.setState({ done: true }) : this.setState({ step: s.step + 1 }); },
+      onBack: () => this.setState({ step: Math.max(1, s.step - 1) }),
+      onReset: () => this.setState({ step: 1, picks: [], cond: "", year: "", make: "", model: "", day: null, time: "", place: "", name: "", tel: "", email: "", notes: "", done: false }),
+
+      nameOrYou: s.name.trim().split(" ")[0] || "you",
+      slotSummary,
+      summaryRows: [
+        { label: "Services", value: s.picks.length ? s.picks.join(", ") : "Nothing picked yet", color: s.picks.length ? "#F4F3F3" : "rgba(244,243,243,.35)" },
+        { label: "Vehicle", value: vehicle || "Awaiting details", color: vehicle ? "#F4F3F3" : "rgba(244,243,243,.35)" },
+        { label: "Condition", value: s.cond || "—", color: s.cond ? "#F4F3F3" : "rgba(244,243,243,.35)" },
+        { label: "Consultation", value: dayObj ? slotSummary : "Not scheduled", color: dayObj ? "#FF4A52" : "rgba(244,243,243,.35)" },
+        { label: "Contact", value: [s.name, s.tel, s.email].filter(Boolean).join(" · ") || "—", color: s.name ? "#F4F3F3" : "rgba(244,243,243,.35)" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

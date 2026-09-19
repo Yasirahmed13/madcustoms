@@ -19,8 +19,18 @@ a:hover{color:#FF8A90}
 input,select,textarea,button{font-family:Archivo,system-ui,sans-serif}
 input::placeholder{color:rgba(244,243,243,.32)}
 img{max-width:100%}
+/* ---- work gallery + lightbox ---- */
+.mad-svc-media img,.mad-tile img{transition:transform .7s cubic-bezier(.22,.7,.2,1),opacity .4s ease}
+.mad-svc-media:hover img{transform:scale(1.04);opacity:1!important}
+.mad-tile:hover img{transform:scale(1.05)}
+.mad-svc-media:focus-visible,.mad-tile:focus-visible{outline:2px solid #FF4A52;outline-offset:-2px}
+.mad-work-filters{scrollbar-width:none}
+.mad-work-filters::-webkit-scrollbar{display:none}
+.mad-lb-thumbs{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.22) transparent}
+@keyframes madfade{from{opacity:0}to{opacity:1}}
 /* ---- tablet ---- */
 @media (max-width:900px){
+  .mad-work-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
   .mad-nav{display:none!important}
   .mad-hero-badge{display:none!important}
   .mad-hdr-actions{margin-left:auto}
@@ -79,6 +89,25 @@ img{max-width:100%}
   .mad-faq-a{padding-left:0!important;font-size:14.5px!important}
 
   .mad-mbar a{font-size:13px!important;padding:15px 6px!important}
+
+  .mad-work-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:6px!important}
+  .mad-work-filters{flex-wrap:nowrap!important;overflow-x:auto;margin-left:-16px!important;margin-right:-16px!important;padding:0 16px 2px}
+  .mad-work-more{flex-direction:column;align-items:stretch!important}
+  .mad-work-more button{width:100%}
+  .mad-lb-long{display:none!important}
+  .mad-lb-short{display:inline!important}
+  .mad-lb-stage{padding:8px 0!important}
+  .mad-lb-nav{width:40px!important;height:40px!important;font-size:16px!important}
+  .mad-lb-nav-prev{left:8px!important}
+  .mad-lb-nav-next{right:8px!important}
+  .mad-lb-cap{padding:12px 16px 8px!important}
+  .mad-lb-cap button{width:100%}
+  .mad-lb-thumbs{padding:6px 16px 14px!important}
+  .mad-lb-thumbs button{width:52px!important;height:52px!important}
+}
+@media (prefers-reduced-motion:reduce){
+  .mad-marquee{animation:none!important}
+  .mad-svc-media img,.mad-tile img{transition:none!important}
 }
 @keyframes madmarq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes madpulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
@@ -311,21 +340,25 @@ img{max-width:100%}
         <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;color:#E01B24">02 / CAPABILITIES</div>
         <h2 style="font-family:Anton,sans-serif;font-size:clamp(32px,4.6vw,58px);line-height:.95;margin:12px 0 0;text-transform:uppercase">Nine ways in</h2>
       </div>
-      <p style="margin:0 0 6px auto;max-width:36ch;font-size:14.5px;line-height:1.5;color:rgba(244,243,243,.6)">Every service is run in-house by the same crew, so a wrap, a drop and a wheel package land as one cohesive build.</p>
+      <p style="margin:0 0 6px auto;max-width:36ch;font-size:14.5px;line-height:1.5;color:rgba(244,243,243,.6)">Every service is run in-house by the same crew, so a wrap, a drop and a wheel package land as one cohesive build. Tap a service to see the work.</p>
     </div>
     <div class="mad-svc-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.1);border-left:1px solid rgba(255,255,255,.1)">
       <sc-for list="{{ services }}" as="s" hint-placeholder-count="9">
-        <a data-reveal href="{{ s.url }}" style="min-width:0;border-right:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);background:#101013;padding:0;display:flex;flex-direction:column;color:#F4F3F3" style-hover="background:#171512">
-          <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:#141418">
-            <img src="{{ s.img }}" alt="{{ s.title }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;opacity:.82;filter:saturate(.9)">
+        <article data-reveal style="min-width:0;border-right:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);background:#101013;display:flex;flex-direction:column;color:#F4F3F3" style-hover="background:#171512">
+          <button class="mad-svc-media" onClick="{{ s.onOpen }}" aria-haspopup="dialog" aria-label="{{ s.openLabel }}" tabIndex="-1" style="position:relative;display:block;width:100%;padding:0;border:none;cursor:pointer;aspect-ratio:16/10;overflow:hidden;background:#141418">
+            <img src="{{ s.img }}" alt="{{ s.alt }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:{{ s.pos }};opacity:.82;filter:saturate(.9);display:block">
             <span style="position:absolute;top:12px;left:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;background:rgba(12,12,13,.78);padding:5px 8px;color:#FF4A52">{{ s.num }}</span>
-          </div>
+            <span style="position:absolute;right:12px;bottom:12px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;background:rgba(12,12,13,.78);padding:5px 8px;color:rgba(244,243,243,.86)">{{ s.countLabel }}</span>
+          </button>
           <div style="padding:20px 20px 24px;display:flex;flex-direction:column;gap:9px;flex:1">
             <h3 style="font-family:Anton,sans-serif;font-size:19px;text-transform:uppercase;letter-spacing:.01em;margin:0">{{ s.title }}</h3>
             <p style="margin:0;font-size:13.5px;line-height:1.5;color:rgba(244,243,243,.58);text-wrap:pretty">{{ s.desc }}</p>
-            <span style="margin-top:auto;padding-top:12px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#E01B24">View details →</span>
+            <div style="margin-top:auto;padding-top:12px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px">
+              <button onClick="{{ s.onOpen }}" aria-haspopup="dialog" aria-label="{{ s.openLabel }}" style="cursor:pointer;background:none;border:none;padding:0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#E01B24" style-hover="color:#FF8A90">See the work →</button>
+              <a href="{{ s.url }}" style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,243,243,.5)" style-hover="color:#F4F3F3">Details ↗</a>
+            </div>
           </div>
-        </a>
+        </article>
       </sc-for>
     </div>
   </div>
@@ -336,12 +369,43 @@ img{max-width:100%}
     <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;color:#E01B24">03 / OUT OF THE SHOP</div>
     <h2 style="font-family:Anton,sans-serif;font-size:clamp(32px,4.6vw,58px);line-height:.95;margin:12px 0 0;text-transform:uppercase">Recent metal</h2>
   </div>
-  <div class="mad-marquee" style="display:flex;width:max-content;gap:14px;animation:madmarq 48s linear infinite;padding-bottom:70px">
+  <div class="mad-marquee" aria-hidden="true" style="display:flex;width:max-content;gap:14px;animation:madmarq 48s linear infinite;padding-bottom:70px">
     <sc-for list="{{ marquee }}" as="m" hint-placeholder-count="10">
       <div style="width:clamp(240px,26vw,380px);aspect-ratio:4/3;overflow:hidden;background:#141418;border:1px solid rgba(255,255,255,.08)">
-        <img src="{{ m.img }}" alt="MAD Custom build" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+        <img src="{{ m.img }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:{{ m.pos }}">
       </div>
     </sc-for>
+  </div>
+  <div class="mad-wrap mad-pad-bottom" style="max-width:1280px;margin:0 auto;padding:0 22px 90px">
+    <div class="mad-sec-head" data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 18px;margin-bottom:24px">
+      <h3 style="font-family:Anton,sans-serif;font-size:clamp(24px,2.8vw,34px);line-height:1;margin:0;text-transform:uppercase">The work, by service</h3>
+      <p style="margin:0 0 2px auto;max-width:44ch;font-size:14.5px;line-height:1.5;color:rgba(244,243,243,.6)">{{ workIntro }}</p>
+    </div>
+    <div class="mad-work-filters" role="group" aria-label="Filter the work by service" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">
+      <sc-for list="{{ workFilters }}" as="f" hint-placeholder-count="10">
+        <button onClick="{{ f.onPick }}" aria-pressed="{{ f.pressed }}" style="flex:none;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};border:1px solid {{ f.bc }};padding:10px 14px;font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px;white-space:nowrap">{{ f.label }}<span style="font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.6">{{ f.count }}</span></button>
+      </sc-for>
+    </div>
+    <div class="mad-work-grid" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px">
+      <sc-for list="{{ workTiles }}" as="t" hint-placeholder-count="12">
+        <button class="mad-tile" onClick="{{ t.onOpen }}" aria-haspopup="dialog" style="position:relative;display:block;min-width:0;width:100%;padding:0;margin:0;border:1px solid rgba(255,255,255,.08);background:#141418;cursor:pointer;aspect-ratio:4/5;overflow:hidden;text-align:left;color:#F4F3F3" style-hover="border-color:#E01B24">
+          <img src="{{ t.thumb }}" alt="{{ t.alt }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:{{ t.pos }};display:block">
+          <span aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;padding:40px 14px 13px;background:linear-gradient(0deg,rgba(12,12,13,.92) 10%,rgba(12,12,13,0));display:flex;flex-direction:column;gap:5px">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#FF4A52">{{ t.tag }}</span>
+            <span style="font-size:14px;font-weight:600;line-height:1.3">{{ t.car }}</span>
+          </span>
+          <sc-if value="{{ t.video }}">
+            <span aria-hidden="true" style="position:absolute;top:10px;left:10px;display:flex;align-items:center;gap:7px;background:rgba(12,12,13,.8);padding:6px 9px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;color:#F4F3F3"><span style="color:#FF4A52;font-size:9px">▶</span>{{ t.len }}</span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </div>
+    <div class="mad-work-more" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;margin-top:24px">
+      <sc-if value="{{ workHasMore }}">
+        <button onClick="{{ onWorkMore }}" style="cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,.2);color:#F4F3F3;font-weight:600;padding:14px 22px;font-size:14px" style-hover="border-color:#E01B24;background:rgba(224,27,36,.1)">{{ workMoreLabel }}</button>
+      </sc-if>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;color:rgba(244,243,243,.42)">{{ workShowing }}</span>
+    </div>
   </div>
 </section>
 
@@ -355,9 +419,9 @@ img{max-width:100%}
       <p style="margin:0;font-size:15.5px;line-height:1.68;color:rgba(244,243,243,.62);text-wrap:pretty">Cheo laid the foundation for the values that still define our family today: honest work, commitment to our customers, and a genuine passion for the automotive industry. What began as one man's dream became a legacy passed from generation to generation.</p>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" data-reveal>
-      <img src="https://madcustomcars.com/wp-content/uploads/2026/03/DSC3572-scaled.jpeg" alt="Shop floor" loading="lazy" style="width:100%;height:0;min-height:100%;box-sizing:border-box;object-fit:cover;grid-row:span 2;border:1px solid rgba(255,255,255,.08)">
-      <img src="https://madcustomcars.com/wp-content/uploads/2026/03/DSC4056-scaled.jpeg" alt="Wheel detail" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid rgba(255,255,255,.08)">
-      <img src="https://madcustomcars.com/wp-content/uploads/2026/03/DSC4177-scaled.jpeg" alt="Finished build" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid rgba(255,255,255,.08)">
+      <img src="assets/work/thumb/wheels-corvette-c8r-storefront.jpg" alt="The MAD Custom Florida storefront with a Corvette C8.R Edition out front" loading="lazy" style="width:100%;height:0;min-height:100%;box-sizing:border-box;object-fit:cover;object-position:center 30%;grid-row:span 2;border:1px solid rgba(255,255,255,.08)">
+      <img src="assets/work/thumb/suspension-silverado-2500hd-fitment.jpg" alt="A MAD Custom technician checking wheel-well clearance on a Silverado 2500 HD" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;border:1px solid rgba(255,255,255,.08)">
+      <img src="assets/work/thumb/ppf-corvette-c8-showroom.jpg" alt="A Rapid Blue Corvette C8 in the MAD Custom showroom" loading="lazy" style="width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center 58%;border:1px solid rgba(255,255,255,.08)">
     </div>
   </div>
 
@@ -543,22 +607,166 @@ img{max-width:100%}
   <a href="#book" style="flex:1.4;text-align:center;padding:16px 10px;font-size:13.5px;font-weight:700;background:#E01B24;color:#0c0c0d" style-hover="background:#FF4A52">Book in 60 seconds</a>
 </div>
 
+<sc-if value="{{ lbOpen }}">
+  <div data-lightbox role="dialog" aria-modal="true" aria-label="{{ lbTitle }}" style="position:fixed;inset:0;z-index:100;background:#09090a;display:flex;flex-direction:column;animation:madfade .25s ease both">
+    <div style="display:flex;align-items:center;gap:16px;padding:12px 12px 12px 18px;border-bottom:1px solid rgba(255,255,255,.08)">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#E01B24;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span class="mad-lb-long">{{ lbTag }}</span><span class="mad-lb-short" style="display:none">{{ lbTagShort }}</span></span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.12em;color:rgba(244,243,243,.5);white-space:nowrap">{{ lbCount }}</span>
+      <button data-lb-close onClick="{{ onLbClose }}" aria-label="Close gallery" style="margin-left:auto;flex:none;cursor:pointer;width:44px;height:44px;display:grid;place-items:center;background:transparent;border:1px solid rgba(255,255,255,.16);color:#F4F3F3;font-size:18px;line-height:1" style-hover="border-color:#E01B24;background:rgba(224,27,36,.12)">✕</button>
+    </div>
+    <div class="mad-lb-stage" onPointerDown="{{ onLbDown }}" onPointerUp="{{ onLbUp }}" style="position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:18px 76px;touch-action:pan-y">
+      <sc-if value="{{ lbIsVideo }}">
+        <video data-lb-video controls="{{ true }}" playsInline="{{ true }}" preload="none" style="height:100%;max-width:100%;max-height:100%;aspect-ratio:9/16;display:block;background:#000"></video>
+      </sc-if>
+      <sc-if value="{{ lbIsPhoto }}">
+        <img src="{{ lbSrc }}" alt="{{ lbAlt }}" loading="lazy" draggable="false" style="max-width:100%;max-height:100%;object-fit:contain;display:block;user-select:none;animation:madfade .3s ease both">
+      </sc-if>
+      <sc-if value="{{ lbMulti }}">
+        <button class="mad-lb-nav mad-lb-nav-prev" onClick="{{ onLbPrev }}" aria-label="Previous" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);cursor:pointer;width:48px;height:48px;display:grid;place-items:center;background:rgba(12,12,13,.72);border:1px solid rgba(255,255,255,.18);color:#F4F3F3;font-family:'JetBrains Mono',monospace;font-size:18px" style-hover="border-color:#E01B24;background:rgba(224,27,36,.2)">←</button>
+        <button class="mad-lb-nav mad-lb-nav-next" onClick="{{ onLbNext }}" aria-label="Next" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);cursor:pointer;width:48px;height:48px;display:grid;place-items:center;background:rgba(12,12,13,.72);border:1px solid rgba(255,255,255,.18);color:#F4F3F3;font-family:'JetBrains Mono',monospace;font-size:18px" style-hover="border-color:#E01B24;background:rgba(224,27,36,.2)">→</button>
+      </sc-if>
+    </div>
+    <div class="mad-lb-cap" aria-live="polite" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding:14px 18px 10px;border-top:1px solid rgba(255,255,255,.08)">
+      <div style="min-width:0;flex:1 1 260px">
+        <div style="font-family:Anton,sans-serif;font-size:21px;line-height:1.1;text-transform:uppercase;letter-spacing:.01em">{{ lbCar }}</div>
+        <div style="margin-top:5px;font-size:13.5px;line-height:1.45;color:rgba(244,243,243,.6)">{{ lbNote }}</div>
+      </div>
+      <button onClick="{{ onLbBook }}" style="flex:none;cursor:pointer;background:#E01B24;color:#0c0c0d;border:none;font-weight:700;font-size:14px;letter-spacing:.02em;padding:14px 20px" style-hover="background:#FF4A52">{{ lbBookLabel }}</button>
+    </div>
+    <sc-if value="{{ lbMulti }}">
+      <div class="mad-lb-thumbs" style="display:flex;gap:6px;overflow-x:auto;padding:8px 18px 16px">
+        <sc-for list="{{ lbThumbs }}" as="t" hint-placeholder-count="8">
+          <button data-lb-thumb="{{ t.i }}" onClick="{{ t.onPick }}" aria-label="{{ t.label }}" aria-current="{{ t.current }}" style="flex:none;position:relative;cursor:pointer;width:64px;height:64px;padding:0;border:2px solid {{ t.bc }};opacity:{{ t.op }};background:#141418;overflow:hidden" style-hover="opacity:1">
+            <img src="{{ t.thumb }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <sc-if value="{{ t.video }}">
+              <span aria-hidden="true" style="position:absolute;inset:0;display:grid;place-items:center;background:rgba(12,12,13,.35);color:#F4F3F3;font-size:12px">▶</span>
+            </sc-if>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+  </div>
+</sc-if>
+
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;phone&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;+1 (407) 286 4426&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact&quot;},&quot;whatsapp&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://wa.link/c2aabg&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contact&quot;},&quot;instaRows&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:1,&quot;max&quot;:3,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Layout&quot;}}">
 const IMG = "https://madcustomcars.com/wp-content/uploads/2026/03/";
+const WORK = "assets/work/";
+// [num, title, description, page slug, gallery key, short label, cover shot, cover crop]
 const SERVICES = [
-  ["01","Rims & Tires","Precision wheel and tire selection with exact fitment specs to enhance stance, performance and safety.","rims-tires","DSC4277-scaled.jpeg"],
-  ["02","Performance Suspension","Lowering or lift solutions that improve handling and presence while keeping comfort and control.","performance-suspension-systems","DSC3572-scaled.jpeg"],
-  ["03","Premium Vinyl Wrap","High-end vinyl that transforms colour and finish while protecting the original paint underneath.","premium-vinyl-wrap-studio","DSC4177-scaled.jpeg"],
-  ["04","Paint Protection Film","Self-healing film that shields paint from chips, scratches and road debris. Invisible protection.","paint-protection-film-ppf","DSC4056-scaled.jpeg"],
-  ["05","Detailing & Paint Correction","Multi-stage correction and interior refinement for depth, clarity and showroom-level shine.","luxury-detailing-paint-correction","DSC01237-scaled.jpeg"],
-  ["06","Bespoke Custom Builds","Full transformations integrating performance, aesthetics and craftsmanship into one-of-one builds.","bespoke-custom-builds","DSC3537-scaled.jpeg"],
-  ["07","Upholstery","Interior restoration and customization in premium materials, built for comfort and durability.","upholstery","DSC01735-scaled.jpeg"],
-  ["08","Window Tint","High-performance film for privacy, heat rejection and UV protection with a sleek finish.","window-tint","DSC3559-scaled.jpeg"],
-  ["09","Performance Exhaust","Exhaust upgrades tuned for airflow, throttle response and a refined but aggressive tone.","performance-exhaust-systems","DSC4114-scaled.jpeg"]
+  ["01","Rims & Tires","Precision wheel and tire selection with exact fitment specs to enhance stance, performance and safety.","rims-tires","wheels","Rims & Tires","wheels-bmw-x4m-detail","center 70%"],
+  ["02","Performance Suspension","Lowering or lift solutions that improve handling and presence while keeping comfort and control.","performance-suspension-systems","suspension","Suspension","suspension-bronco-profile","center 62%"],
+  ["03","Premium Vinyl Wrap","High-end vinyl that transforms colour and finish while protecting the original paint underneath.","premium-vinyl-wrap-studio","wrap","Vinyl Wrap","wrap-amg-gt63-olive","center 68%"],
+  ["04","Paint Protection Film","Self-healing film that shields paint from chips, scratches and road debris. Invisible protection.","paint-protection-film-ppf","ppf","PPF","ppf-corvette-c8","center 62%"],
+  ["05","Detailing & Paint Correction","Multi-stage correction and interior refinement for depth, clarity and showroom-level shine.","luxury-detailing-paint-correction","detailing","Detailing","detailing-ferrari-f430-rear","center 40%"],
+  ["06","Bespoke Custom Builds","Full transformations integrating performance, aesthetics and craftsmanship into one-of-one builds.","bespoke-custom-builds","builds","Custom Builds","builds-maverick-x3","center 62%"],
+  ["07","Upholstery","Interior restoration and customization in premium materials, built for comfort and durability.","upholstery","upholstery","Upholstery","upholstery-ferrari-headrest","center 45%"],
+  ["08","Window Tint","High-performance film for privacy, heat rejection and UV protection with a sleek finish.","window-tint","tint","Window Tint","tint-install","center"],
+  ["09","Performance Exhaust","Exhaust upgrades tuned for airflow, throttle response and a refined but aggressive tone.","performance-exhaust-systems","exhaust","Exhaust","exhaust-amg-c63","center 85%"]
 ];
-const GALLERY = ["DSC4114-scaled.jpeg","DSC3539-scaled.jpeg","DSC4123-scaled.jpeg","DSC3537-scaled.jpeg","DSC4277-scaled.jpeg","DSC01237-scaled.jpeg","DSC3572-scaled.jpeg","DSC4056-scaled.jpeg","DSC4177-scaled.jpeg","DSC01735-scaled.jpeg"];
+// Shop photos in assets/work/{thumb,full}, best first within each service: [file, service, vehicle, detail, tile crop]
+const PHOTOS = [
+  ["wheels-bmw-x4m-detail","wheels","BMW X4 M","Gloss-black wheels, red M calipers"],
+  ["wheels-911-vossen-detail","wheels","Porsche 911 Carrera T","Vossen wheel, acid-green calipers"],
+  ["wheels-range-rover-svr-low","wheels","Range Rover Sport SVR","Gloss-black wheels, blue calipers","38% center"],
+  ["wheels-amg-gt63-front","wheels","Mercedes-AMG GT 63","Gloss-black wheels, yellow calipers","30% center"],
+  ["wheels-taycan-detail","wheels","Porsche Taycan","Black multi-spoke wheels, white calipers"],
+  ["wheels-yukon-ridge-grappler","wheels","GMC Yukon","22-inch wheels on Nitto Ridge Grapplers"],
+  ["wheels-supra-red-calipers","wheels","Toyota GR Supra","Calipers refinished in gloss red"],
+  ["wheels-ferrari-f430","wheels","Ferrari F430","Black five-spoke wheels, red calipers"],
+  ["wheels-911-carrera-t","wheels","Porsche 911 Carrera T","Gunmetal Vossen wheels","40% center"],
+  ["wheels-defender","wheels","Land Rover Defender","Black wheels, red calipers, all-terrain tires","40% center"],
+  ["wheels-amg-gt63-vossen","wheels","Mercedes-AMG GT 63","Vossen wheels, yellow calipers"],
+  ["wheels-corvette-c7-grand-sport","wheels","Chevrolet Corvette Grand Sport","Gloss-black wheels","45% center"],
+  ["wheels-ram-trx","wheels","Ram 1500 TRX","Black wheels, all-terrain tires"],
+  ["wheels-yukon","wheels","GMC Yukon","Blacked-out wheel and tire package","45% center"],
+  ["wheels-taycan","wheels","Porsche Taycan","Black multi-spoke wheels"],
+  ["wheels-panamera","wheels","Porsche Panamera","Gloss-black wheels, acid-green calipers","40% center"],
+  ["wheels-bmw-x4m","wheels","BMW X4 M","Gloss-black wheel package","50% center"],
+  ["wheels-range-rover-svr","wheels","Range Rover Sport SVR","Gloss-black wheels"],
+  ["wheels-defender-rear","wheels","Land Rover Defender","Matching black spare"],
+  ["wheels-amg-gt63-rear","wheels","Mercedes-AMG GT 63","Rear wheel, yellow calipers"],
+  ["wheels-yukon-denali","wheels","GMC Yukon Denali","Gloss-black multi-spoke wheels"],
+  ["wheels-911-carrera-t-front","wheels","Porsche 911 Carrera T","Gunmetal Vossen wheels"],
+  ["wheels-taycan-side","wheels","Porsche Taycan","Black multi-spoke wheels"],
+  ["wheels-defender-front","wheels","Land Rover Defender","Black wheels, red calipers"],
+  ["wheels-yukon-front","wheels","GMC Yukon","Black wheels, all-terrain tires"],
+  ["wheels-ram-trx-side","wheels","Ram 1500 TRX","Black wheels, all-terrain tires"],
+  ["wheels-bronco-detail","wheels","Ford Bronco","Black wheels, mud-terrain tires"],
+  ["wheels-corvette-c8-rear","wheels","Chevrolet Corvette C8","Gloss-black wheels, red calipers"],
+  ["wheels-corvette-c8r-storefront","wheels","Chevrolet Corvette C8.R Edition","Silver multi-spoke wheels"],
+  ["suspension-bronco-profile","suspension","Ford Bronco","Lifted, on mud-terrain tires"],
+  ["suspension-tundra-trd-pro","suspension","Toyota Tundra","Level stance on all-terrain tires"],
+  ["suspension-silverado-2500hd-fitment","suspension","Chevrolet Silverado 2500 HD","Wheel-well clearance check"],
+  ["suspension-bronco","suspension","Ford Bronco","Lifted, on black wheels"],
+  ["suspension-tundra-platinum","suspension","Toyota Tundra Platinum","Level stance, black wheels, mud-terrain tires","55% center"],
+  ["suspension-tundra-trd-pro-detail","suspension","Toyota Tundra","Wheel-well clearance"],
+  ["suspension-silverado-2500hd","suspension","Chevrolet Silverado 2500 HD","Fitting the new setup","50% center"],
+  ["suspension-bronco-3q","suspension","Ford Bronco","Lifted stance"],
+  ["suspension-tundra-platinum-2","suspension","Toyota Tundra Platinum","Level stance, black wheels","45% center"],
+  ["suspension-bronco-above","suspension","Ford Bronco","Lifted four-door"],
+  ["wrap-amg-gt63-olive","wrap","Mercedes-AMG GT 63","Olive green, gloss finish"],
+  ["wrap-g63-satin-bronze","wrap","Mercedes-AMG G 63","Satin bronze","55% center"],
+  ["wrap-amg-gt63-satin-black","wrap","Mercedes-AMG GT 63","Satin black"],
+  ["wrap-amg-gt63-olive-2","wrap","Mercedes-AMG GT 63","Olive green, gloss finish"],
+  ["wrap-g63-satin-bronze-detail","wrap","Mercedes-AMG G 63","Satin bronze, red calipers"],
+  ["wrap-g63-matte-black","wrap","Mercedes-AMG G 63","Matte black"],
+  ["wrap-c63-satin-black","wrap","Mercedes-AMG C 63","Satin black"],
+  ["ppf-corvette-c8","ppf","Chevrolet Corvette C8","Rapid Blue, gloss finish"],
+  ["ppf-escalade","ppf","Cadillac Escalade","Clear front-end film"],
+  ["ppf-corvette-c8-showroom","ppf","Chevrolet Corvette C8","Rapid Blue, gloss finish"],
+  ["ppf-escalade-front","ppf","Cadillac Escalade","Clear front-end film"],
+  ["ppf-ferrari-portofino","ppf","Ferrari Portofino",""],
+  ["ppf-nissan-gtr","ppf","Nissan GT-R",""],
+  ["ppf-tesla-model-y","ppf","Tesla Model Y",""],
+  ["detailing-ferrari-f430-rear","detailing","Ferrari F430","Deep gloss on the rear deck"],
+  ["detailing-ferrari-key","detailing","Ferrari","Mirror finish on the hood","45% center"],
+  ["detailing-ferrari-f430-2","detailing","Ferrari F430",""],
+  ["detailing-ferrari-f430","detailing","Ferrari F430",""],
+  ["builds-maverick-x3","builds","Can-Am Maverick X3 MAX","Beadlocks on Cooper Discoverer STT Pro tires"],
+  ["builds-amg-gt63-carbon-front","builds","Mercedes-AMG GT 63","Carbon aero kit, Vossen wheels","55% center"],
+  ["builds-maverick-x3-front","builds","Can-Am Maverick X3 MAX","FOX shocks, front winch"],
+  ["builds-amg-gt63-carbon","builds","Mercedes-AMG GT 63","Carbon splitter and side skirts","60% center"],
+  ["builds-maverick-x3-side","builds","Can-Am Maverick X3 MAX","Custom graphics, rock sliders"],
+  ["builds-maverick-x3-cabin","builds","Can-Am Maverick X3 MAX","Harnesses and roll-cage audio"],
+  ["upholstery-ferrari-headrest","upholstery","Ferrari","Embroidered prancing-horse headrest"],
+  ["upholstery-ferrari-wheel","upholstery","Ferrari","Carbon and leather wheel, red stitching"],
+  ["upholstery-sub-enclosure","upholstery","Truck audio build","Custom enclosure trimmed in red"],
+  ["tint-install","tint","Window tint","Film squeegeed onto the quarter glass","68% center"],
+  ["tint-jaguar-xj","tint","Jaguar XJ","Dark tint all around"],
+  ["tint-trim","tint","Window tint","Film trimmed by hand","62% center"],
+  ["tint-jaguar-xj-rear","tint","Jaguar XJ","Tinted rear glass"]
+];
+// Shop videos in assets/work/video (poster frame shares the file name): [file, service, vehicle, detail, length, slot in its gallery, tile crop]
+const VIDEOS = [
+  ["exhaust-amg-c63","exhaust","Mercedes-AMG C 63","Quad tips and rear diffuser","0:03",0,"center 85%"],
+  ["wheels-ram-trx-mount-balance","wheels","Ram 1500 TRX","Mount, balance and torque, start to finish","0:28",2],
+  ["suspension-bronco-walkaround","suspension","Ford Bronco","Walkaround of the finished build","0:27",3],
+  ["wrap-amg-gt63-olive-rollout","wrap","Mercedes-AMG GT 63","Rolling out in olive green","0:07",2],
+  ["wrap-amg-gt63-olive-walkaround","wrap","Mercedes-AMG GT 63","Olive green walkaround","0:26",5],
+  ["ppf-escalade-install","ppf","Cadillac Escalade","Film going on around the headlight","0:06",3],
+  ["ppf-tesla-model-y-walkaround","ppf","Tesla Model Y","Walkaround with the team","0:22",8]
+];
+const ITEMS = PHOTOS.map(p => ({ file: p[0], key: p[1], car: p[2], note: p[3], pos: p[4] || "center" }))
+  .concat(VIDEOS.map(v => ({ file: v[0], key: v[1], car: v[2], note: v[3], len: v[4], at: v[5], pos: v[6] || "center", video: WORK + "video/" + v[0] + ".mp4" })))
+  .map(w => Object.assign(w, { thumb: WORK + "thumb/" + w.file + ".jpg", full: WORK + "full/" + w.file + ".jpg" }));
+const SVC = {};
+const GROUPS = {};
+SERVICES.forEach(x => { SVC[x[4]] = x; GROUPS[x[4]] = []; });
+ITEMS.forEach((w, i) => { if (!w.video) GROUPS[w.key].push(i); });
+ITEMS.forEach((w, i) => { if (w.video) GROUPS[w.key].splice(w.at, 0, i); });
+// "All work" deals one shot per service per round; the covers already lead the service cards, so they close the list.
+const ALL = [];
+for (let r = 1, deep = Math.max(...Object.values(GROUPS).map(g => g.length)); r < deep; r++)
+  SERVICES.forEach(x => { if (GROUPS[x[4]][r] !== undefined) ALL.push(GROUPS[x[4]][r]); });
+SERVICES.forEach(x => ALL.push(GROUPS[x[4]][0]));
+const MARQUEE = [["wheels-range-rover-svr-low","center"],["builds-amg-gt63-carbon","center"],["suspension-tundra-platinum","center"],["wheels-911-carrera-t","center 60%"],["wrap-amg-gt63-satin-black","center 62%"],["wheels-corvette-c7-grand-sport","center"],["suspension-bronco","center 64%"],["wheels-yukon","center 58%"],["ppf-ferrari-portofino","center 72%"],["wheels-defender","center 62%"],["wheels-bmw-x4m","center"],["wheels-amg-gt63-front","center 70%"]];
+const plural = (n, word) => n + " " + word + (n === 1 ? "" : "s");
+const countLabel = ids => {
+  const v = ids.filter(i => ITEMS[i].video).length, p = ids.length - v;
+  return [p && plural(p, "photo"), v && plural(v, "video")].filter(Boolean).join(" · ");
+};
 const INSTA = ["madcustomfl_1772583481689-1-1.jpeg","DSC4277-scaled.jpeg","madcustomfl_1772583503776.jpeg","DSC01237-scaled.jpeg","madcustomfl_1772583481689-2.jpeg","DSC01735-scaled.jpeg","DSC4056-scaled.jpeg","DSC3572-scaled.jpeg","DSC3559-scaled.jpeg","DSC4177-scaled.jpeg","DSC3539-scaled.jpeg","DSC4123-scaled.jpeg"];
 const FAQ = [
   ["What makes MAD Custom different?","We treat detailing and customization as craftsmanship, not maintenance: advanced techniques, premium-grade products and meticulous attention to detail on every vehicle."],
@@ -581,10 +789,12 @@ const REVIEWS = [
 const STEP_TITLES = ["SERVICES","VEHICLE","SLOT","CONTACT"];
 
 class Component extends DCLogic {
-  state = { step: 1, picks: [], cond: "", year: "", make: "", model: "", day: null, time: "", place: "", name: "", tel: "", email: "", notes: "", done: false, faq: -1 };
+  state = { step: 1, picks: [], cond: "", year: "", make: "", model: "", day: null, time: "", place: "", name: "", tel: "", email: "", notes: "", done: false, faq: -1, work: "all", workN: 12, lb: null };
 
   componentDidMount() {
     this.heroReel();
+    this._onKey = e => this.lightboxKey(e);
+    document.addEventListener("keydown", this._onKey);
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const seen = new WeakSet();
     const arm = () => {
@@ -636,6 +846,70 @@ class Component extends DCLogic {
     if (this._io) this._io.disconnect();
     clearInterval(this._silenceTimer);
     clearInterval(this._armTimer);
+    document.removeEventListener("keydown", this._onKey);
+    document.documentElement.style.overflow = "";
+  }
+
+  // ---- work gallery lightbox: ids are indexes into ITEMS, i is the one on screen ----
+  openLightbox(ids, i) {
+    this._lbReturn = document.activeElement;
+    document.documentElement.style.overflow = "hidden";
+    this.setState({ lb: { ids, i } }, () => {
+      const close = document.querySelector("[data-lb-close]");
+      if (close) close.focus();
+      this.lightboxSync();
+    });
+  }
+
+  closeLightbox(after) {
+    document.documentElement.style.overflow = "";
+    this.setState({ lb: null }, () => {
+      if (after) after();
+      else if (this._lbReturn && this._lbReturn.focus) this._lbReturn.focus();
+    });
+  }
+
+  showLightbox(i) {
+    this.setState(s => s.lb ? { lb: { ids: s.lb.ids, i: (i + s.lb.ids.length) % s.lb.ids.length } } : {}, () => this.lightboxSync());
+  }
+
+  lightboxSync() {
+    const lb = this.state.lb;
+    if (!lb) return;
+    // The <video> has no src in the template (the raw markup would request "{{ … }}"), so load it here.
+    const cur = ITEMS[lb.ids[lb.i]];
+    const video = document.querySelector("[data-lb-video]");
+    if (video && cur.video && video.getAttribute("src") !== cur.video) {
+      video.poster = cur.full;
+      video.src = cur.video;
+      const p = video.play();
+      if (p && p.catch) p.catch(() => {});
+    }
+    const thumb = document.querySelector('[data-lb-thumb="' + lb.i + '"]');
+    if (thumb) thumb.scrollIntoView({ block: "nearest", inline: "center" });
+    [1, -1].forEach(d => {
+      const w = ITEMS[lb.ids[(lb.i + d + lb.ids.length) % lb.ids.length]];
+      if (!w.video) new Image().src = w.full;
+    });
+  }
+
+  lightboxKey(e) {
+    const lb = this.state.lb;
+    if (!lb) return;
+    if (e.key === "Escape") { e.preventDefault(); this.closeLightbox(); return; }
+    if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && e.target.tagName !== "VIDEO") {
+      e.preventDefault();
+      this.showLightbox(lb.i + (e.key === "ArrowRight" ? 1 : -1));
+      return;
+    }
+    if (e.key !== "Tab") return;
+    const box = document.querySelector("[data-lightbox]");
+    const stops = box ? [...box.querySelectorAll("button, video")] : [];
+    if (!stops.length) return;
+    const first = stops[0], last = stops[stops.length - 1];
+    if (!box.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 
   chip(active) {
@@ -674,12 +948,77 @@ class Component extends DCLogic {
     const dayObj = days.find(d => d.key === s.day);
     const slotSummary = dayObj ? dayObj.dow + " " + dayObj.num + " " + dayObj.mon + ", " + (s.time || "morning") + (s.place ? " · " + s.place : "") : "your chosen slot";
     const vehicle = [s.year, s.make, s.model].filter(Boolean).join(" ");
+    const workList = s.work === "all" ? ALL : GROUPS[s.work];
+    const workShown = workList.slice(0, s.workN);
+    const lb = s.lb;
+    const cur = lb ? ITEMS[lb.ids[lb.i]] : null;
+    const curSvc = cur ? SVC[cur.key] : null;
 
     return {
       phone, waHref: wa, telHref: "tel:+14072864426",
       trust: [{ k: "3,160+", v: "Cars delivered" }, { k: "35K+", v: "Shop hours" }, { k: "5.0", v: "Google rating" }, { k: "2", v: "Locations" }],
-      services: SERVICES.map(x => ({ num: x[0], title: x[1], desc: x[2], url: "https://madcustomcars.com/" + x[3] + "/", img: IMG + x[4] })),
-      marquee: GALLERY.concat(GALLERY).map(f => ({ img: IMG + f })),
+      services: SERVICES.map(x => ({
+        num: x[0], title: x[1], desc: x[2], url: "https://madcustomcars.com/" + x[3] + "/",
+        img: WORK + "thumb/" + x[6] + ".jpg", pos: x[7], alt: x[1] + " by MAD Custom: " + ITEMS[GROUPS[x[4]][0]].car,
+        countLabel: countLabel(GROUPS[x[4]]),
+        openLabel: "See the " + x[1] + " work, " + countLabel(GROUPS[x[4]]),
+        onOpen: () => this.openLightbox(GROUPS[x[4]], 0)
+      })),
+      marquee: MARQUEE.concat(MARQUEE).map(m => ({ img: WORK + "thumb/" + m[0] + ".jpg", pos: m[1] })),
+
+      workIntro: plural(PHOTOS.length, "photo") + " and " + plural(VIDEOS.length, "video") + " straight off the shop floor. Pick a service, then tap any shot to see it full size.",
+      workFilters: [["all", "All work", ALL.length]].concat(SERVICES.map(x => [x[4], x[5], GROUPS[x[4]].length])).map(f => Object.assign({
+        label: f[1], count: f[2], pressed: s.work === f[0] ? "true" : "false",
+        onPick: () => this.setState({ work: f[0], workN: 12 })
+      }, this.chip(s.work === f[0]))),
+      workTiles: workShown.map((id, i) => {
+        const w = ITEMS[id];
+        return {
+          thumb: w.thumb, pos: w.pos, car: w.car, tag: SVC[w.key][5], video: !!w.video, len: w.len,
+          alt: w.car + (w.note ? " — " + w.note : "") + " (" + SVC[w.key][1] + (w.video ? " video" : "") + ")",
+          onOpen: () => this.openLightbox(workList, i)
+        };
+      }),
+      workHasMore: workList.length > s.workN,
+      workMoreLabel: "Show " + Math.min(12, workList.length - s.workN) + " more",
+      onWorkMore: () => this.setState({ workN: s.workN + 12 }),
+      workShowing: "Showing " + workShown.length + " of " + workList.length,
+
+      lbOpen: !!cur, lbIsVideo: !!(cur && cur.video), lbIsPhoto: !!(cur && !cur.video),
+      lbMulti: !!lb && lb.ids.length > 1,
+      lbSrc: cur && !cur.video ? cur.full : "",
+      lbAlt: cur ? cur.car + (cur.note ? " — " + cur.note : "") : "",
+      lbTitle: curSvc ? curSvc[1] + " gallery" : "Gallery",
+      lbTag: curSvc ? curSvc[1] : "", lbTagShort: curSvc ? curSvc[5] : "",
+      lbCount: lb ? String(lb.i + 1).padStart(2, "0") + " / " + String(lb.ids.length).padStart(2, "0") : "",
+      lbCar: cur ? cur.car : "", lbNote: cur ? cur.note || curSvc[1] : "",
+      lbBookLabel: curSvc ? "Book " + curSvc[5] + " →" : "",
+      lbThumbs: lb ? lb.ids.map((id, i) => ({
+        i, thumb: ITEMS[id].thumb, video: !!ITEMS[id].video,
+        label: (i + 1) + ": " + ITEMS[id].car + (ITEMS[id].video ? " (video)" : ""),
+        current: i === lb.i ? "true" : "false", bc: i === lb.i ? "#E01B24" : "transparent", op: i === lb.i ? 1 : .5,
+        onPick: () => this.showLightbox(i)
+      })) : [],
+      onLbClose: () => this.closeLightbox(),
+      onLbPrev: () => this.showLightbox(lb.i - 1),
+      onLbNext: () => this.showLightbox(lb.i + 1),
+      onLbDown: e => { this._swipe = e.target.tagName === "VIDEO" ? null : { x: e.clientX, y: e.clientY }; },
+      onLbUp: e => {
+        const sw = this._swipe;
+        this._swipe = null;
+        if (!sw) return;
+        const dx = e.clientX - sw.x, dy = e.clientY - sw.y;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) this.showLightbox(lb.i + (dx < 0 ? 1 : -1));
+        else if (Math.abs(dx) < 8 && Math.abs(dy) < 8 && e.target === e.currentTarget) this.closeLightbox();
+      },
+      onLbBook: () => {
+        const title = curSvc[1];
+        this.setState(st => ({ picks: st.picks.includes(title) ? st.picks : st.picks.concat(title) }));
+        this.closeLightbox(() => {
+          const book = document.getElementById("book");
+          if (book) book.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      },
       insta: INSTA.slice(0, (this.props.instaRows ?? 2) * 6).map(f => ({ img: IMG + f })),
       eras: [
         { year: "1973", title: "Magueyes Tires Service", tag: "FIRST GENERATION · CHEO COLEGA", rule: "#E01B24", body: "José “Cheo Colega” Rodríguez opens the doors, serving the tire and automotive needs of the local community — and setting the values we still run on." },
